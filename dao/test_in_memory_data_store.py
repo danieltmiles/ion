@@ -20,7 +20,10 @@ class TestInMemoryDataStore(unittest.TestCase):
     def test_update(self):
         self.store.create(1, {"key": "value"})
         self.store.update(1, {"second_key": "second_value"})
-        self.assertEqual(self.store._store, {"key": "value", "second_key": "second_value"})
+        self.assertEquals(len(self.store._store.keys()), 1)
+        self.assertEquals(len(self.store._store[1]), 2)
+        self.assertEquals(self.store._store[1]["key"], "value")
+        self.assertEquals(self.store._store[1]["second_key"], "second_value")
 
     def test_delete(self):
         self.store.create(1, {"key": "value"})
