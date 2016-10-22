@@ -19,3 +19,9 @@ class InMemoryDataStore:
     def delete(self, obj_id):
         if obj_id in self._store:
             del self._store[obj_id]
+
+    def has(self, obj_id):
+        return obj_id in self._store
+
+    def keys(self):
+        return self._store.keys()
