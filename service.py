@@ -1,9 +1,22 @@
 #!/usr/bin/env python
 from flask import Flask, request
 import json
-from dao.in_memory_data_store import InMemoryDataStore
+import os
+from dao.couchdb_data_store import CouchdbDataStore
 
-store = InMemoryDataStore()
+def get_couch_base_uri():
+    couch_addr = "127.0.0.1"
+    couch_port = "5984"
+    if "COUCHDB_PORT_5984_TCP_ADDR" in os.environ:
+        couch_addr = os.environ["COUCHDB_PORT_5984_TCP_ADDR"]
+    if "COUCHDB_PORT_5984_TCP_PORT" in os.environ:
+        couch_port = os.environ["COUCHDB_PORT_5984_TCP_PORT"]
+    print "couch addr: %s" % couch_addr
+    print "couch port: %s" % couch_port
+    server_base_address="http://%s:%s" % (couch_addr, couch_port)
+    return server_base_address
+
+store = CouchdbDataStore(get_couch_base_uri(), db_name="products")
 app = Flask(__name__)
 
 @app.route("/v1/status")
@@ -30,5 +43,8 @@ def product_id(product_id):
 def products():
     return json.dumps(store.keys())
 
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
+
+
