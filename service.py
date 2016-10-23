@@ -5,7 +5,7 @@ import os
 from dao.couchdb_data_store import CouchdbDataStore
 
 def get_couch_base_uri():
-    couch_addr = "127.0.0.1"
+    couch_addr = "couchdb"
     couch_port = "5984"
     if "COUCHDB_PORT_5984_TCP_ADDR" in os.environ:
         couch_addr = os.environ["COUCHDB_PORT_5984_TCP_ADDR"]

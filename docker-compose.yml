@@ -1,0 +1,14 @@
+version: '2'
+services:
+  ion:
+    build: .
+    links:
+      - "couchdb:couchdb"
+    ports:
+     - "5000:5000"
+    depends_on:
+     - couchdb
+  couchdb:
+    image: couchdb
+    ports:
+     - "5984:5984"
