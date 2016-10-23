@@ -15,7 +15,10 @@ The format of those variables may look familar because they are the format made 
 ```bash
 docker run -it --link your_couchdb_instance:couchdb ion
 ```
-And on the subject of Docker, you'll notice two files available in the root of the project. *Dockerfile* describes to the docker command line utility how to construct a Docker container with this project's code inside it, and *docker-compose.yml* describes how to the docker-compose command line utility how to bring up an instance of the ion docker container in concert with a couchdb container.
+And on the subject of Docker, you'll notice two files available in the root of the project. *Dockerfile* describes to the docker command line utility how to construct a Docker container with this project's code inside it, and *docker-compose.yml* describes how to the docker-compose command line utility how to bring up an instance of the ion docker container in concert with a couchdb container. To launch both containers via docker-compose, use
+```bash
+docker-compose up
+```
 
 ---
 # design decisions
