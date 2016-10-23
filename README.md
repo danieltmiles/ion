@@ -16,6 +16,7 @@ The format of those variables may look familar because they are the format made 
 docker run -it --link your_couchdb_instance:couchdb ion
 ```
 And on the subject of Docker, you'll notice two files available in the root of the project. *Dockerfile* describes to the docker command line utility how to construct a Docker container with this project's code inside it, and *docker-compose.yml* describes how to the docker-compose command line utility how to bring up an instance of the ion docker container in concert with a couchdb container.
+
 ---
 # design decisions
 The essence of the [breaker pattern](http://martinfowler.com/bliki/CircuitBreaker.html) as I understand it, is that each operation can/should have two modes of operating. There should be a primary method, which is what the software should do under ideal circumstances, and there should be a fallback method which describes a reasonable way for the software to continue being useful even if it cannot do exactly what the user asked. In order to demonstrate that pattern in this toy example, I've created a data store object to communicate with couchdb whenever it can. If it cannot, and the "circuit" is set to "open," the couchdb object will begin operating from a local, in-memory cache. When the circuit breaker becomes aware that couchdb is once again available, the couchdb data store object will "replay" everything in its local cache into the database.
