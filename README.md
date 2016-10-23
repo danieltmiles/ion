@@ -19,7 +19,13 @@ And on the subject of Docker, you'll notice two files available in the root of t
 ```bash
 docker-compose up
 ```
-
+# API
+```
+GET /v1/status --> determine if the service is online
+GET /v1/products --> return a JSON list of all product ids
+POST /v1/products/:id --> With a product ID supplied in the command-line and arbitrary, valid JSON in the POST body, create or merge a product
+GET /v1/products/:id --> retrieve a given product ID
+```
 ---
 # design decisions
 The essence of the [breaker pattern](http://martinfowler.com/bliki/CircuitBreaker.html) as I understand it, is that each operation can/should have two modes of operating. There should be a primary method, which is what the software should do under ideal circumstances, and there should be a fallback method which describes a reasonable way for the software to continue being useful even if it cannot do exactly what the user asked. In order to demonstrate that pattern in this toy example, I've created a data store object to communicate with couchdb whenever it can. If it cannot, and the "circuit" is set to "open," the couchdb object will begin operating from a local, in-memory cache. When the circuit breaker becomes aware that couchdb is once again available, the couchdb data store object will "replay" everything in its local cache into the database.
